@@ -92,6 +92,7 @@ ENV_OVERRIDES = {
     ("voice", "language"): "OPENCODE_VOICE_LANG",
     ("voice", "preroll_ms"): "OPENCODE_VOICE_PREROLL_MS",
     ("voice", "model_dir"): "OPENCODE_VOICE_MODEL",
+    ("voice", "cpu_dtype"): "OPENCODE_VOICE_CPU_DTYPE",
 }
 
 SAMPLE_RATE = 16000            # ASR 输入采样率
@@ -601,7 +602,11 @@ class Transcriber:
         if self.device.startswith("cuda"):
             dtype = torch.bfloat16
         else:
-            dtype = torch.float32
+            # CPU 模式默认 fp32（速度优先，转写约 1.2s/句）。
+            # 设为 bf16 可省约 6 GB 内存，但转写会慢约 3.4 倍（本机 CPU 无 AVX512-BF16，半精度靠模拟）。
+            # 改法：voice.config.ini 里 cpu_dtype=bf16，或设环境变量 OPENCODE_VOICE_CPU_DTYPE=bf16
+            _cpu_dt = (settings.get("voice", "cpu_dtype", "fp32") or "fp32").strip().lower()
+            dtype = torch.float32 if _cpu_dt in ("fp32", "float32", "32") else torch.bfloat16
             try:
                 torch.set_num_threads(max(1, (os.cpu_count() or 4)))
             except Exception:  # noqa: BLE001

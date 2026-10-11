@@ -141,6 +141,8 @@ language=           ; 留空=自动，或 Chinese / English
 preroll_ms=500      ; 长按前多保留的音频，避免吞字
 model_dir=          ; 留空=同目录 models\Qwen3-ASR-1.7B
 max_record_seconds=60     ; 单次录音上限（到点自动结束并粘贴）
+compute=auto              ; 计算设备：auto（有显卡用显卡）/ cuda / cpu（切 cpu 会重启服务并关预览）
+cpu_dtype=fp32            ; CPU 模式精度：fp32（默认，快）/ bf16（省约 6GB 内存，慢约 3.4 倍）
 partial_enabled=1         ; 实时预览开关
 partial_interval_ms=280   ; 预览刷新间隔（毫秒）
 partial_min_growth_ms=150 ; 新增音频超过多少毫秒才重新识别
@@ -268,6 +270,14 @@ powershell -ExecutionPolicy Bypass -File uninstall.ps1 -KeepData # 保留 venv �
 ## 更新记录
 
 > 每次改动都会在这里追加一条。
+
+### 1.3.1 — 2026-10-11
+
+- **新增 CPU 加载精度选项**（`voice.cpu_dtype`，默认 `fp32`）
+  - `fp32`：默认，速度优先（CPU 单句转写约 1.2s）
+  - `bf16`：内存约省 6GB，但转写慢约 3.4 倍（本机 CPU 无 AVX512-BF16，半精度靠模拟转换）
+- 也可用环境变量 `OPENCODE_VOICE_CPU_DTYPE=bf16` 覆盖；显卡模式固定 bf16，不受影响
+- 安装器会把新选项自动补进已有配置（保留原取值，默认值 = 原行为）
 
 ### 1.3.0 — 2026-09-23
 
