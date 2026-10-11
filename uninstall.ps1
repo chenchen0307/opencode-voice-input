@@ -5,13 +5,13 @@ OpenCode 语音输入 卸载器
 用法：
     powershell -ExecutionPolicy Bypass -File uninstall.ps1
 可选参数：
-    -InstallDir <路径>   默认 %USERPROFILE%\.config\opencode\voice
+    -InstallDir <路径>   默认 E:\Apps\opencode-voice
     -KeepData            保留 .venv 与 models（便于快速重装）
     -KeepTasks           不删除计划任务
 #>
 [CmdletBinding()]
 param(
-    [string]$InstallDir = "$env:USERPROFILE\.config\opencode\voice",
+    [string]$InstallDir = 'E:\Apps\opencode-voice',
     [switch]$KeepData,
     [switch]$KeepTasks
 )

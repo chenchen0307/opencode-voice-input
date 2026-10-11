@@ -8,7 +8,7 @@ OpenCode 语音输入 自检脚本
 #>
 [CmdletBinding()]
 param(
-    [string]$InstallDir = "$env:USERPROFILE\.config\opencode\voice",
+    [string]$InstallDir = 'E:\Apps\opencode-voice',
     [int]$Port = 0
 )
 

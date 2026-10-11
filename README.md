@@ -39,7 +39,7 @@ powershell -ExecutionPolicy Bypass -File install.ps1
 
 | 参数 | 说明 |
 | --- | --- |
-| `-InstallDir <路径>` | 安装目录，默认 `%USERPROFILE%\.config\opencode\voice` |
+| `-InstallDir <路径>` | 安装目录，默认 `E:\Apps\opencode-voice` |
 | `-Port <端口>` | 服务端口，默认 17860 |
 | `-Model <模型ID>` | 默认 `Qwen/Qwen3-ASR-1.7B` |
 | `-SkipModel` | 跳过模型下载（已有模型时） |
@@ -204,13 +204,13 @@ hotkey_task=OpenCodeVoiceHotkey
 
 ```powershell
 # 模型单次转写耗时 vs 音频长度
-python "$env:USERPROFILE\.config\opencode\voice\bench.py" --runs 3
+python "E:\Apps\opencode-voice\bench.py" --runs 3
 ```
 
 ## 管理命令
 
 ```powershell
-$v = "$env:USERPROFILE\.config\opencode\voice\voicectl.cmd"
+$v = "E:\Apps\opencode-voice\voicectl.cmd"
 & $v status    # 状态
 & $v start     # 启动
 & $v restart   # 重启
@@ -243,7 +243,7 @@ $v = "$env:USERPROFILE\.config\opencode\voice\voicectl.cmd"
 一条命令检查全链路：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.config\opencode\voice\selftest.ps1"
+powershell -ExecutionPolicy Bypass -File "E:\Apps\opencode-voice\selftest.ps1"
 ```
 
 会逐项检查：文件完整性、服务健康（含音频数据流）、麦克风枚举、**转写链路**（注入样例音频验证）、实时预览接口、助手进程、计划任务、插件部署，最后给出 通过/失败/警告 汇总。
@@ -270,6 +270,13 @@ powershell -ExecutionPolicy Bypass -File uninstall.ps1 -KeepData # 保留 venv �
 ## 更新记录
 
 > 每次改动都会在这里追加一条。
+
+### 1.3.2 — 2026-10-11
+
+- **安装目录迁移到 `E:\Apps\opencode-voice`**（原来在 `%USERPROFILE%\.config\opencode\voice`，C 盘占用 9.2GB）
+- 安装器 / 自检 / 管理命令 / README 的默认路径同步改为 `E:\Apps\opencode-voice`，仍可用 `-InstallDir` 覆盖
+- TUI 插件的 `installDir` 兜底值同步更新（插件本体迁到 `E:\Apps\opencode-voice\plugin`，C 盘配置目录留目录联接，opencode 照常加载）
+- 注意：venv 里的 `pyvenv.cfg` 仍指向 uv 管理的基础解释器（`%APPDATA%\uv\python\...`，约 63MB），属共享运行时，未迁移
 
 ### 1.3.1 — 2026-10-11
 

@@ -5,7 +5,7 @@ OpenCode 语音输入 安装器
 用法（普通权限运行即可，创建计划任务时会请求一次管理员授权）：
     powershell -ExecutionPolicy Bypass -File install.ps1
 可选参数：
-    -InstallDir <路径>   默认 %USERPROFILE%\.config\opencode\voice
+    -InstallDir <路径>   默认 E:\Apps\opencode-voice
     -Port <端口>         默认 17860
     -Model <模型ID>      默认 Qwen/Qwen3-ASR-1.7B
     -SkipModel           跳过模型下载
@@ -14,7 +14,7 @@ OpenCode 语音输入 安装器
 #>
 [CmdletBinding()]
 param(
-    [string]$InstallDir = "$env:USERPROFILE\.config\opencode\voice",
+    [string]$InstallDir = 'E:\Apps\opencode-voice',
     [string]$Model = 'Qwen/Qwen3-ASR-1.7B',
     [int]$Port = 17860,
     [switch]$SkipModel,

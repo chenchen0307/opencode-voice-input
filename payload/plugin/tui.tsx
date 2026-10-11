@@ -2,7 +2,6 @@ import { Plugin, usePlugin } from "@opencode/plugin/tui"
 import { createSignal, onCleanup } from "solid-js"
 import fs from "node:fs"
 import path from "node:path"
-import os from "node:os"
 
 /**
  * OpenCode 语音输入 —— CLI/TUI 插件外壳。
@@ -37,8 +36,7 @@ function pluginDir(): string {
 
 const here = pluginDir()
 const localCfg = (here && readJson(path.join(here, "config.json"))) || {}
-const installDir: string =
-  localCfg.installDir || path.join(os.homedir(), ".config", "opencode", "voice")
+const installDir: string = localCfg.installDir || "E:\\Apps\\opencode-voice"
 
 function readPort(): number {
   if (localCfg.port) return Number(localCfg.port)
