@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 日志
+*.log
+
+# 本地模型与运行数据（首次安装时自动下载）
+models/
+
+# 编辑器
+.vscode/
+.idea/

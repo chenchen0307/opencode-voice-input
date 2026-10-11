@@ -1,0 +1,16 @@
+{
+  "name": "opencode-voice",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "OpenCode 语音输入插件外壳（配合本机 voice_server.py 使用）",
+  "exports": {
+    ".": "./index.ts",
+    "./tui": "./tui.tsx"
+  },
+  "peerDependencies": {
+    "@opencode/plugin": "*",
+    "@opentui/solid": ">=0.5.8",
+    "solid-js": ">=1.9.0"
+  }
+}
